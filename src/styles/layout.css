@@ -1,0 +1,22 @@
+.lui-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lui-space-3);
+}
+
+.lui-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lui-space-3);
+}
+
+.lui-shell {
+  display: grid;
+  min-height: 100vh;
+}
+
+.lui-content-boundary {
+  width: min(100%, 80rem);
+  margin-inline: auto;
+}

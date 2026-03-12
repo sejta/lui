@@ -1,0 +1,11 @@
+:root {
+  --lui-motion-fade: opacity var(--lui-duration-fast) var(--lui-ease-standard);
+  --lui-motion-scale: transform var(--lui-duration-normal) var(--lui-ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lui-duration-fast: 0ms;
+    --lui-duration-normal: 0ms;
+  }
+}
