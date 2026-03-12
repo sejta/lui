@@ -1,3 +1,9 @@
+.lui-root {
+  min-height: 100vh;
+  background: var(--lui-color-bg);
+  color: var(--lui-color-text);
+}
+
 .lui-stack {
   display: flex;
   flex-direction: column;
@@ -14,9 +20,28 @@
 .lui-shell {
   display: grid;
   min-height: 100vh;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .lui-content-boundary {
   width: min(100%, 80rem);
   margin-inline: auto;
+  padding-inline: var(--lui-space-4);
+}
+
+.lui-row {
+  display: flex;
+  align-items: center;
+  gap: var(--lui-space-3);
+}
+
+.lui-fill {
+  width: 100%;
+}
+
+.lui-surface {
+  background: var(--lui-color-surface);
+  border: var(--lui-border-width) solid var(--lui-color-border);
+  border-radius: var(--lui-radius-md);
+  box-shadow: none;
 }

@@ -1,6 +1,8 @@
+import './styles.css'
+
 export const stylesEntry = {
   name: 'lui-styles',
-  status: 'planned',
+  status: 'ready',
   files: [
     'tokens.css',
     'themes.css',
@@ -9,4 +11,5 @@ export const stylesEntry = {
     'utilities.css',
     'motion.css',
   ],
+  themes: ['light', 'dark'],
 } as const

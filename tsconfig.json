@@ -9,12 +9,16 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
+    "allowArbitraryExtensions": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "."
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "demo/**/*.ts",
+    "vite.config.ts"
   ]
 }

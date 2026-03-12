@@ -1,3 +1,342 @@
+.lui-control {
+  width: 100%;
+  height: var(--lui-control-height-md);
+  padding-inline: var(--lui-control-padding-x-md);
+  border: var(--lui-border-width) solid var(--lui-color-border);
+  border-radius: var(--lui-radius-control);
+  background: var(--lui-color-surface-raised);
+  color: var(--lui-color-text);
+  transition:
+    border-color var(--lui-duration-fast) var(--lui-ease-standard),
+    background-color var(--lui-duration-fast) var(--lui-ease-standard),
+    color var(--lui-duration-fast) var(--lui-ease-standard);
+}
+
+.lui-control::placeholder {
+  color: var(--lui-color-text-muted);
+}
+
+.lui-control:hover {
+  border-color: var(--lui-color-border-strong);
+  background: var(--lui-color-surface);
+}
+
+.lui-control:focus,
+.lui-control:focus-visible {
+  border-color: var(--lui-color-accent);
+  box-shadow: none;
+  background: var(--lui-color-surface);
+}
+
+.lui-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  background: var(--lui-color-surface-muted);
+  color: var(--lui-color-text-muted);
+}
+
+.lui-control[data-invalid='true'] {
+  border-color: var(--lui-color-danger);
+}
+
+.lui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lui-space-2);
+  min-height: var(--lui-control-height-md);
+  padding-inline: var(--lui-control-padding-x-md);
+  border: var(--lui-border-width) solid transparent;
+  border-radius: var(--lui-radius-control);
+  background: var(--lui-color-accent);
+  color: var(--lui-color-accent-contrast);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--lui-duration-fast) var(--lui-ease-standard),
+    border-color var(--lui-duration-fast) var(--lui-ease-standard),
+    color var(--lui-duration-fast) var(--lui-ease-standard),
+    opacity var(--lui-duration-fast) var(--lui-ease-standard);
+}
+
+.lui-button:hover {
+  background: var(--lui-color-accent-hover);
+}
+
+.lui-button:active {
+  background: var(--lui-color-accent-active);
+}
+
+.lui-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.lui-button[data-variant='secondary'] {
+  background: var(--lui-color-surface);
+  color: var(--lui-color-text);
+  border-color: var(--lui-color-border);
+}
+
+.lui-button[data-variant='secondary']:hover {
+  background: var(--lui-color-surface-muted);
+  border-color: var(--lui-color-border-strong);
+}
+
+.lui-button[data-variant='secondary']:active {
+  background: var(--lui-color-surface-muted);
+  border-color: var(--lui-color-border-strong);
+}
+
+.lui-button[data-variant='ghost'] {
+  background: transparent;
+  color: var(--lui-color-text);
+  border-color: transparent;
+}
+
+.lui-button[data-variant='ghost']:hover {
+  background: var(--lui-color-surface-muted);
+}
+
+.lui-button[data-variant='ghost']:active {
+  background: color-mix(in srgb, var(--lui-color-surface-muted) 88%, var(--lui-color-text) 12%);
+}
+
+.lui-button:focus-visible {
+  box-shadow: 0 0 0 var(--lui-focus-ring-width) var(--lui-color-focus);
+}
+
+.lui-button[data-size='sm'] {
+  min-height: var(--lui-control-height-sm);
+  padding-inline: var(--lui-control-padding-x-sm);
+  font-size: var(--lui-font-size-1);
+}
+
+.lui-button[data-size='lg'] {
+  min-height: var(--lui-control-height-lg);
+  padding-inline: var(--lui-control-padding-x-lg);
+  font-size: var(--lui-font-size-4);
+}
+
+.lui-panel,
+.lui-card {
+  padding: var(--lui-space-4);
+}
+
+.lui-panel {
+  background: var(--lui-color-surface);
+}
+
+.lui-card[data-interactive='true'] {
+  transition:
+    background-color var(--lui-duration-fast) var(--lui-ease-standard),
+    border-color var(--lui-duration-fast) var(--lui-ease-standard);
+}
+
+.lui-card[data-interactive='true']:hover {
+  background: var(--lui-color-surface-muted);
+  border-color: var(--lui-color-border-strong);
+}
+
+.lui-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lui-space-3);
+  margin-bottom: var(--lui-space-3);
+}
+
+.lui-divider {
+  flex: none;
+  background: var(--lui-color-border);
+}
+
+.lui-divider[data-orientation='horizontal'] {
+  width: 100%;
+  height: 1px;
+}
+
+.lui-divider[data-orientation='vertical'] {
+  width: 1px;
+  align-self: stretch;
+  min-height: 1.5rem;
+}
+
+.lui-tabs {
+  display: grid;
+  gap: var(--lui-space-4);
+}
+
+.lui-tabs__list {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lui-space-2);
+  padding: 0.1875rem;
+  border: 1px solid var(--lui-color-border);
+  border-radius: calc(var(--lui-radius-control) + 0.125rem);
+  background: var(--lui-color-surface-muted);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.lui-tabs__tab {
+  min-height: var(--lui-control-height-md);
+  padding-inline: var(--lui-control-padding-x-md);
+  border: 1px solid transparent;
+  border-radius: var(--lui-radius-control);
+  background: transparent;
+  color: var(--lui-color-text-muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--lui-duration-fast) var(--lui-ease-standard),
+    border-color var(--lui-duration-fast) var(--lui-ease-standard),
+    color var(--lui-duration-fast) var(--lui-ease-standard);
+}
+
+.lui-tabs__tab:hover {
+  color: var(--lui-color-text);
+  background: color-mix(in srgb, var(--lui-color-surface) 78%, transparent);
+}
+
+.lui-tabs__tab:active {
+  background: var(--lui-color-surface);
+}
+
+.lui-tabs__tab[data-active='true'] {
+  background: var(--lui-color-surface);
+  color: var(--lui-color-text);
+  border-color: var(--lui-color-border);
+}
+
+.lui-tabs__tab:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lui-tabs__panel {
+  min-width: 0;
+}
+
+.lui-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: var(--lui-z-dialog);
+}
+
+.lui-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(15 23 42 / 0.36);
+}
+
+.lui-dialog__viewport {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: var(--lui-space-4);
+}
+
+.lui-dialog__panel {
+  position: relative;
+  width: min(100%, 32rem);
+  padding: var(--lui-space-4);
+  display: grid;
+  gap: var(--lui-space-4);
+  background: var(--lui-color-surface);
+  box-shadow: var(--lui-shadow-md);
+}
+
+.lui-dialog__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--lui-space-3);
+}
+
+.lui-dialog__content {
+  display: grid;
+  gap: var(--lui-space-3);
+}
+
+.lui-dialog__actions {
+  display: flex;
+  justify-content: end;
+  gap: var(--lui-space-2);
+}
+
+.lui-dropdown {
+  display: inline-flex;
+}
+
+.lui-dropdown__trigger {
+  display: inline-flex;
+}
+
+.lui-dropdown__menu {
+  min-width: 12rem;
+  padding: var(--lui-space-2);
+  display: grid;
+  gap: var(--lui-space-1);
+  z-index: var(--lui-z-dropdown);
+  box-shadow: var(--lui-shadow-md);
+}
+
+.lui-dropdown__item {
+  width: 100%;
+  min-height: var(--lui-control-height-md);
+  padding-inline: var(--lui-control-padding-x-md);
+  border: 1px solid transparent;
+  border-radius: var(--lui-radius-control);
+  background: transparent;
+  color: var(--lui-color-text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color var(--lui-duration-fast) var(--lui-ease-standard),
+    color var(--lui-duration-fast) var(--lui-ease-standard);
+}
+
+.lui-dropdown__item:hover {
+  background: var(--lui-color-surface-muted);
+}
+
+.lui-dropdown__item:active {
+  background: color-mix(in srgb, var(--lui-color-surface-muted) 84%, var(--lui-color-text) 16%);
+}
+
+.lui-dropdown__item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.lui-dropdown__separator {
+  height: 1px;
+  background: var(--lui-color-border);
+  margin-block: var(--lui-space-1);
+}
+
+.lui-popover {
+  display: inline-flex;
+}
+
+.lui-popover__trigger {
+  display: inline-flex;
+}
+
+.lui-popover__content {
+  width: min(100vw - 1rem, 20rem);
+  padding: var(--lui-space-4);
+  display: grid;
+  gap: var(--lui-space-3);
+  z-index: var(--lui-z-popover);
+  box-shadow: var(--lui-shadow-md);
+}
+
 .lui-visually-hidden {
   position: absolute;
   width: 1px;
@@ -16,4 +355,16 @@
 
 .lui-text-muted {
   color: var(--lui-color-text-muted);
+}
+
+.lui-title {
+  font-size: var(--lui-font-size-3);
+  line-height: var(--lui-line-height-tight);
+  font-weight: 600;
+}
+
+.lui-subtitle {
+  font-size: var(--lui-font-size-2);
+  line-height: var(--lui-line-height-tight);
+  font-weight: 600;
 }

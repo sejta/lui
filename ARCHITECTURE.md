@@ -82,6 +82,13 @@ Holds reusable UI logic with minimal policy:
 - scroll locking
 - overlay positioning contracts
 
+Overlay contract:
+
+- floating overlays render via teleport instead of staying inside local layout containers
+- positioning is handled only through the shared `useOverlayPosition` composable
+- dismissible overlays share the same close rules: outside click, Escape, and controlled open state
+- overlay layers use shared z-index tokens for dropdown, popover, and dialog
+
 ### `src/components`
 
 Holds reusable product-facing primitives:

@@ -10,11 +10,23 @@ body {
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   min-height: 100vh;
   font-family: var(--lui-font-sans);
+  font-size: var(--lui-font-size-2);
+  line-height: var(--lui-line-height-normal);
   background: var(--lui-color-bg);
   color: var(--lui-color-text);
+  text-rendering: optimizeLegibility;
+}
+
+body[data-lui-scroll-lock='true'] {
+  overflow: hidden;
 }
 
 button,
@@ -24,10 +36,68 @@ select {
   font: inherit;
 }
 
+button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+
+input,
+textarea,
+select,
+button {
+  margin: 0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+h2 {
+  font-size: var(--lui-font-size-3);
+  line-height: var(--lui-line-height-tight);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--lui-font-size-2);
+  line-height: var(--lui-line-height-tight);
+  font-weight: 600;
+}
+
+p {
+  font-size: var(--lui-font-size-1);
+  color: var(--lui-color-text-muted);
+}
+
 img,
 svg,
 video,
 canvas {
   display: block;
   max-width: 100%;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--lui-focus-ring-width) var(--lui-color-focus);
+  transition:
+    box-shadow var(--lui-duration-fast) var(--lui-ease-standard),
+    border-color var(--lui-duration-fast) var(--lui-ease-standard),
+    background-color var(--lui-duration-fast) var(--lui-ease-standard);
 }
