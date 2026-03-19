@@ -33,7 +33,9 @@ Current composables:
 
 ## Installation
 
-If `lui` is in the same workspace, the simplest option is a local dependency:
+Choose the dependency source based on how you plan to use `lui`.
+
+For local development with a sibling repository:
 
 ```json
 {
@@ -43,7 +45,7 @@ If `lui` is in the same workspace, the simplest option is a local dependency:
 }
 ```
 
-Or in a monorepo:
+In a monorepo:
 
 ```json
 {
@@ -53,7 +55,23 @@ Or in a monorepo:
 }
 ```
 
-Then install dependencies in the consumer project as usual.
+From GitHub by release tag:
+
+```json
+{
+  "dependencies": {
+    "@sejta/lui": "github:sejta/lui#v0.1.0"
+  }
+}
+```
+
+Recommended usage:
+
+- use `file:../lui` only for local development
+- use `workspace:*` if app and library live in one monorepo
+- use a GitHub tag or package registry for reproducible deploys
+
+Then run `npm install` in the consumer frontend project as usual.
 
 ## Basic Usage
 
