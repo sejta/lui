@@ -130,7 +130,7 @@ Available themes right now:
 
 Style entry:
 
-- [`@sejta/lui/style.css`](./dist/style.css)
+- `@sejta/lui/style.css`
 
 ## Overlay Components
 
@@ -436,10 +436,6 @@ Primary entry points:
 - `@sejta/lui/composables`
 - `@sejta/lui/app`
 
-Main public root:
-
-- [`src/index.ts`](/home/laslo/lui/src/index.ts)
-
 ## Build And Development
 
 Useful scripts:
@@ -448,12 +444,6 @@ Useful scripts:
 - `npm run build` - library build into `dist`
 - `npm run build:demo` - demo build
 - `npm run typecheck` - TypeScript validation
-
-Build output goes to:
-
-- `dist/index.js`
-- `dist/index.d.ts`
-- `dist/style.css`
 
 ## Current Boundaries
 
@@ -473,7 +463,7 @@ Deliberately not included yet:
 
 For deeper internal notes:
 
-- [ARCHITECTURE.md](/home/laslo/lui/ARCHITECTURE.md)
-- [COMPONENTS.md](/home/laslo/lui/COMPONENTS.md)
-- [STYLES.md](/home/laslo/lui/STYLES.md)
-- [ROADMAP.md](/home/laslo/lui/ROADMAP.md)
+- `ARCHITECTURE.md`
+- `COMPONENTS.md`
+- `STYLES.md`
+- `ROADMAP.md`
