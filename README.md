@@ -1,6 +1,6 @@
 # lui
 
-`lui` is a compact Vue 3 UI library for internal products, settings screens, admin panels, overlays, and small app shells.
+`lui` is a compact Vue 3 UI library for settings screens, admin panels, overlays, and small app shells.
 
 It is intentionally small:
 
@@ -71,7 +71,7 @@ Recommended usage:
 - use `workspace:*` if app and library live in one monorepo
 - use a GitHub tag or package registry for reproducible deploys
 
-Then run `npm install` in the consumer frontend project as usual.
+Then run `npm install` in the frontend project as usual.
 
 ## Basic Usage
 
@@ -299,7 +299,7 @@ h(UiRadioGroup, {
 ```ts
 h(UiField, {
   label: 'Workspace name',
-  description: 'Used across internal tools.',
+  description: 'Shown across the workspace.',
 }, {
   default: ({ controlId, labelledBy, describedBy }) =>
     h(UiInput, {
@@ -461,7 +461,7 @@ Deliberately not included yet:
 
 ## Project References
 
-For deeper internal notes:
+Additional project docs:
 
 - `ARCHITECTURE.md`
 - `COMPONENTS.md`

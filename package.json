@@ -2,7 +2,25 @@
   "name": "@sejta/lui",
   "version": "0.1.0",
   "private": false,
-  "description": "Compact internal Vue 3 UI framework / UI kit.",
+  "description": "Compact Vue 3 UI library for settings screens, admin panels, overlays, and small app shells.",
+  "license": "MIT",
+  "author": "Sejta",
+  "keywords": [
+    "vue",
+    "vue3",
+    "ui",
+    "component-library",
+    "design-system",
+    "admin"
+  ],
+  "homepage": "https://github.com/sejta/lui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sejta/lui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sejta/lui/issues"
+  },
   "packageManager": "npm@10",
   "type": "module",
   "sideEffects": [
