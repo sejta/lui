@@ -23,7 +23,7 @@ Defines core variables:
 
 Maps semantic variables for themes.
 
-For v0.1, only the structure is defined. Final brand colors are intentionally undecided.
+For v1.0.0, the package ships with a compact default theme and a dark theme.
 
 ### `base.css`
 
@@ -69,7 +69,7 @@ Planned baseline:
 - one future dark theme
 - semantic aliases for surface, text, border, accent, focus
 
-## v0.1 Out of Scope
+## v1.0.0 Out of Scope
 
 - token build pipeline
 - CSS-in-JS

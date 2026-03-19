@@ -1,6 +1,6 @@
 {
   "name": "@sejta/lui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "description": "Compact Vue 3 UI library for settings screens, admin panels, overlays, and small app shells.",
   "license": "MIT",
@@ -31,8 +31,7 @@
     "README.md",
     "ARCHITECTURE.md",
     "COMPONENTS.md",
-    "STYLES.md",
-    "ROADMAP.md"
+    "STYLES.md"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",

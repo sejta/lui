@@ -60,7 +60,7 @@ From GitHub by release tag:
 ```json
 {
   "dependencies": {
-    "@sejta/lui": "github:sejta/lui#v0.1.0"
+    "@sejta/lui": "github:sejta/lui#v1.0.0"
   }
 }
 ```
@@ -466,4 +466,3 @@ Additional project docs:
 - `ARCHITECTURE.md`
 - `COMPONENTS.md`
 - `STYLES.md`
-- `ROADMAP.md`

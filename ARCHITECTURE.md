@@ -50,7 +50,6 @@ Rules:
 ├── ARCHITECTURE.md
 ├── COMPONENTS.md
 ├── STYLES.md
-├── ROADMAP.md
 └── src
     ├── app
     ├── components
@@ -124,11 +123,11 @@ This keeps imports predictable and allows internal reorganization later with min
 
 ## What Is Deliberately Missing
 
-- no build tooling decision yet
 - no runtime plugin layer
 - no registry system
 - no icon package
 - no token generation pipeline
-- no testing setup
+- no dedicated docs site
+- no visual regression setup
 
 These should be added only when real implementation pressure appears.

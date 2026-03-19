@@ -1,6 +1,6 @@
 # Components
 
-## v0.1 Component Set
+## v1.0.0 Component Set
 
 The initial component layer is intentionally small and biased toward reusable product UI.
 
@@ -47,17 +47,6 @@ The expected implementation order is:
 
 This order minimizes rework because overlays depend on shared behavior, and app primitives depend on stable base components.
 
-## Component Contract Philosophy
-
-For now, each component folder contains only a lightweight contract file:
-
-- component name
-- status marker
-- props type skeleton
-- notes about responsibility
-
-This gives structure without pretending the implementation already exists.
-
 ## Shared Expectations
 
 All future components should aim for:
@@ -68,7 +57,7 @@ All future components should aim for:
 - token-based styling hooks
 - predictable slot and composition strategy
 
-## Out of Scope for v0.1
+## Out of Scope for v1.0.0
 
 - virtualized lists
 - complex selects
