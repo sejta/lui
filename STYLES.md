@@ -1,78 +1,150 @@
 # Styles
 
-## Goal
+## Summary
 
-The style system should be small, readable, and practical for shipping products quickly.
+`lui` ships with a small global CSS foundation rather than a large theme engine.
 
-It is based on plain CSS with a few clear layers instead of a large design-token platform.
+The styling approach is built around:
 
-## CSS Foundation Layers
+- CSS custom properties
+- a compact set of global layers
+- theme switching through a document attribute
+- component classes that consume shared tokens
+
+Consumers are expected to import the package stylesheet once near the frontend entry point:
+
+```ts
+import '@sejta/lui/style.css'
+```
+
+## Style Layers
+
+The shipped stylesheet is composed from a few focused files.
 
 ### `tokens.css`
 
-Defines core variables:
+Defines the package token set, including values and semantic aliases for:
 
 - spacing
 - radius
-- typography scale
-- shadow levels
-- z-index levels
-- neutral semantic aliases
+- typography
+- shadows
+- borders
+- focus treatment
+- z-index layers
+- component-level color variables
 
 ### `themes.css`
 
-Maps semantic variables for themes.
+Maps token aliases for available themes.
 
-For v1.0.0, the package ships with a compact default theme and a dark theme.
+Current themes:
+
+- `light`
+- `dark`
 
 ### `base.css`
 
-Holds reset and sensible defaults:
+Defines global defaults and baseline element behavior:
 
 - box sizing
-- body and typography defaults
+- body defaults
+- typography inheritance
 - form element inheritance
 - media defaults
 
 ### `layout.css`
 
-Defines layout primitives and shell helpers:
-
-- stack
-- cluster
-- sidebar-shell hooks
-- content bounds
+Provides package layout helpers used by surfaces and shell-oriented composition.
 
 ### `utilities.css`
 
-Holds a very small utility layer. It should stay limited to recurring patterns that are awkward to repeat in component CSS.
+Contains a deliberately small utility layer for repeated layout and spacing patterns that are awkward to duplicate in component CSS.
 
 ### `motion.css`
 
-Defines motion tokens and conventions, including reduced-motion behavior.
+Defines motion tokens and reduced-motion behavior used across overlays and other interactive elements.
 
-## Styling Principles
+## Theme Switching
 
-- Prefer semantic CSS custom properties over hard-coded values
-- Keep utility classes few and intentional
-- Avoid framework-wide visual commitments too early
-- Let components consume tokens instead of redefining local scales
-- Keep motion subtle and optional
+Theme selection is document-level and attribute-based.
 
-## Theming Direction
+```ts
+document.documentElement.dataset.luiTheme = 'light'
+document.documentElement.dataset.luiTheme = 'dark'
+```
 
-The initial architecture supports theme variables but does not lock branding.
+This keeps theme switching explicit and easy to integrate with application settings.
 
-Planned baseline:
+## Public Styling Contract
 
-- one default light theme
-- one future dark theme
-- semantic aliases for surface, text, border, accent, focus
+The package styling contract is intentionally small but real.
 
-## v1.0.0 Out of Scope
+Consumers can rely on:
 
-- token build pipeline
+- the `@sejta/lui/style.css` entry
+- document theme switching through `data-lui-theme`
+- stable component class names prefixed with `lui-`
+- data attributes used for state and variant styling
+- token-driven visuals instead of hard-coded one-off values
+
+Consumers should not rely on:
+
+- the exact internal stylesheet file layout
+- undocumented implementation selectors
+- current DOM shape beyond obvious component structure
+
+The goal is to allow visual extension without freezing every internal selector forever.
+
+## Customization Strategy
+
+The preferred customization path is token and cascade override, not forking package code.
+
+Recommended approaches:
+
+- override CSS custom properties in the application theme
+- layer additional app styles after importing `@sejta/lui/style.css`
+- use `class` and native attributes on components where supported
+- compose primitives into product-specific wrappers inside the application
+
+Avoid:
+
+- patching package source directly in the app
+- depending on deep internal descendants unless there is no better option
+- introducing a second competing global token system for the same primitives
+
+## Visual Principles
+
+The package styling follows a few consistent principles:
+
+- muted, product-oriented visual language
+- low ornament by default
+- accessible contrast and focus visibility
+- surfaces and controls built from shared tokens
+- restrained motion
+
+This keeps the library usable across admin tools, settings interfaces, and compact product shells without forcing a heavy brand identity.
+
+## Consumer Responsibilities
+
+`lui` provides a visual foundation, but applications still own:
+
+- page-level layout composition
+- brand-specific styling beyond the package theme
+- responsive behavior for product-specific screens
+- domain-specific visual states
+
+The package should reduce repetitive UI work, not replace application design decisions entirely.
+
+## Out Of Scope For 1.0.0
+
+The style system intentionally avoids:
+
+- token build pipelines
+- generated design-token artifacts
 - CSS-in-JS
-- per-component visual polish
-- multiple product themes
-- generated design token artifacts
+- per-product theme packs
+- multi-brand theme orchestration
+- high-complexity animation systems
+
+The current CSS model is optimized for shipping and maintaining a compact shared UI layer.

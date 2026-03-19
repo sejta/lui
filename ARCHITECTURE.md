@@ -2,22 +2,29 @@
 
 ## Summary
 
-`lui` uses a single-package structure with four source layers:
+`lui` is a single-package Vue 3 UI library with a deliberately flat structure.
 
-1. `styles` for foundation CSS
-2. `composables` for shared UI behavior
-3. `components` for reusable UI primitives
-4. `app` for product-layout primitives built on the same foundation
+The package is organized into four source layers:
 
-The architecture is intentionally flat. It avoids separate packages, feature-over-segmentation, and deep internal dependency graphs.
+1. `styles` for the shared CSS foundation
+2. `composables` for reusable UI behavior
+3. `components` for product-facing primitives
+4. `app` for higher-level app-shell contracts
 
-## Design Rules
+This layout keeps the public API small and predictable. Consumers install one package, import from a few stable entry points, and do not need to understand the internal file tree to use the library.
 
-- KISS first: prefer a small number of predictable folders
-- DRY where it removes repeated UI behavior or repeated CSS decisions
-- Composition over inheritance
-- Public exports stay centralized
-- Component APIs should be stable before implementation gets deep
+## Public Entry Points
+
+These imports are the intended public surface:
+
+- `@sejta/lui`
+- `@sejta/lui/style.css`
+- `@sejta/lui/styles`
+- `@sejta/lui/composables`
+- `@sejta/lui/components`
+- `@sejta/lui/app`
+
+`@sejta/lui` is the primary entry. It re-exports the package surface and is the default import target for most consumers.
 
 ## Dependency Direction
 
@@ -36,11 +43,13 @@ app
 
 Rules:
 
-- `styles` must not depend on TypeScript modules
-- `composables` should stay UI-agnostic where possible
-- `components` may use `composables` and `styles`
-- `app` may use `components`, `composables`, and `styles`
-- `app` should not become a dumping ground for generic controls
+- `styles` does not depend on TypeScript modules
+- `composables` may depend on Vue and low-level browser APIs
+- `components` may depend on `styles` and `composables`
+- `app` may depend on `components`, `composables`, and `styles`
+- lower layers must not import higher layers
+
+The dependency direction is intentionally strict. It prevents app-shell code from leaking into generic controls and keeps reusable primitives portable across products.
 
 ## Repository Structure
 
@@ -62,72 +71,122 @@ Rules:
 
 ### `src/styles`
 
-Holds the CSS foundation:
+The styles layer defines the shared CSS base for the whole package:
 
-- `tokens.css` for semantic and raw tokens
-- `themes.css` for theme-level token mappings
-- `base.css` for reset and global element defaults
-- `layout.css` for layout primitives and shell helpers
-- `utilities.css` for a small utility layer
-- `motion.css` for timing, easing, and reduced-motion conventions
+- design tokens
+- theme variable mappings
+- reset and element defaults
+- layout helpers
+- utility classes
+- motion conventions
+
+This layer is global by design. `lui` does not try to isolate every style behind CSS-in-JS or shadow DOM boundaries.
 
 ### `src/composables`
 
-Holds reusable UI logic with minimal policy:
+The composables layer contains behavior that is reused by multiple components:
 
 - outside click detection
-- escape key handling
-- controlled/uncontrolled state bridging
-- scroll locking
-- overlay positioning contracts
+- Escape key handling
+- controlled/uncontrolled state coordination
+- body scroll locking
+- overlay positioning
+- toast state management
 
-Overlay contract:
-
-- floating overlays render via teleport instead of staying inside local layout containers
-- positioning is handled only through the shared `useOverlayPosition` composable
-- dismissible overlays share the same close rules: outside click, Escape, and controlled open state
-- overlay layers use shared z-index tokens for dropdown, popover, and dialog
+These modules should stay policy-light. They exist to support primitives, not to define application behavior.
 
 ### `src/components`
 
-Holds reusable product-facing primitives:
+The components layer contains the reusable controls and surfaces that consumers are expected to use directly:
 
 - inputs and actions
+- field wrappers
 - surfaces
+- tabs
 - overlays
-- navigation helpers
-- state display
+- toast UI
 
-Each component lives in its own folder with a single `index.ts` contract file for now. This keeps future implementation room without forcing many files early.
+This is the core of the public package.
 
 ### `src/app`
 
-Holds layout primitives for full application structure:
+The `app` layer is reserved for higher-level application structure such as shells, sidebars, and toolbars.
 
-- `AppShell`
-- `Sidebar`
-- `Toolbar`
+At `1.0.0`, this layer is still a contract layer rather than a finished set of shipped layout components. It is exported to show intended package direction, but consumers should treat it as less mature than the main component primitives.
 
-These are distinct from generic components because they describe product structure rather than isolated controls.
+## Current Maturity
 
-## Export Strategy
+The package does not have uniform maturity across all exports.
 
-`src/index.ts` is the only root public surface. It re-exports:
+Shipped and usable:
 
-- styles entry
-- composables contracts
-- component contracts
-- app primitive contracts
+- styles
+- composables
+- core form controls
+- surface primitives
+- overlay primitives
+- tabs
+- toast UI
 
-This keeps imports predictable and allows internal reorganization later with minimal downstream churn.
+Still lightweight or directional:
 
-## What Is Deliberately Missing
+- `@sejta/lui/app`
+- `UiEmptyState`
 
-- no runtime plugin layer
-- no registry system
-- no icon package
-- no token generation pipeline
-- no dedicated docs site
-- no visual regression setup
+That split is intentional. The stable value of `lui` today is the component and styling foundation, not a fully built app-shell framework.
 
-These should be added only when real implementation pressure appears.
+## Overlay Architecture
+
+Overlay components share a common implementation model:
+
+- floating content is rendered through `Teleport`
+- position is managed through `useOverlayPosition`
+- dismiss behavior is standardized through outside-click and Escape handling
+- dialog uses body scroll locking while open
+
+This keeps dropdowns, popovers, tooltips, context menus, and dialogs aligned on the same behavioral foundation instead of each component solving positioning and dismissal independently.
+
+## API Design Rules
+
+The package follows a small set of API rules:
+
+- prefer explicit props over hidden global configuration
+- use `modelValue` and `update:modelValue` for value-bearing inputs
+- use `open` and `update:open` for controllable overlays
+- pass native attributes through `attrs` when practical
+- keep slot structure shallow and predictable
+- default to low styling assumptions and token-driven visuals
+
+These rules matter more than any single internal file layout. They are the main reason separate components still feel like one library.
+
+## Extending The Library
+
+New additions should follow the existing layering and API rules.
+
+Add a component when:
+
+- the pattern is already repeated across multiple products
+- it can be expressed as a reusable primitive
+- its API can stay small without app-specific knowledge
+
+Keep code out of the library when:
+
+- the behavior depends on product-specific data or workflows
+- the component is mostly page composition
+- the control only exists for one screen or one backend contract
+
+In practice, `lui` should provide primitives and composition building blocks. Product screens, API wiring, routing, and domain-specific widgets belong in consuming applications.
+
+## Deliberately Missing
+
+The package still avoids several categories on purpose:
+
+- runtime plugin layer
+- registry system
+- icon package
+- token generation pipeline
+- dedicated docs site
+- visual regression setup
+- heavy widgets without a strong use case
+
+Those can be added later if real usage pressure justifies them. They are not prerequisites for the current library shape.

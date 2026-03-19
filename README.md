@@ -17,10 +17,10 @@ Current component set:
 
 - actions and inputs: `UiButton`, `UiInput`, `UiTextarea`
 - form controls: `UiCheckbox`, `UiSwitch`, `UiRadioGroup`, `UiField`
-- surfaces and structure: `UiCard`, `UiPanel`, `UiDivider`, `UiEmptyState`
+- surfaces and structure: `UiCard`, `UiPanel`, `UiDivider`
 - overlays: `UiDialog`, `UiDropdown`, `UiContextMenu`, `UiPopover`, `UiTooltip`
 - feedback: `UiToast`, `UiToastViewport`
-- navigation and app UI: `UiTabs`, app shell primitives
+- navigation: `UiTabs`
 
 Current composables:
 
@@ -30,6 +30,11 @@ Current composables:
 - `useScrollLock`
 - `useOverlayPosition`
 - `useToast`
+
+Directional exports at `1.0.0`:
+
+- `UiEmptyState`
+- app-shell contracts from `@sejta/lui/app`
 
 ## Installation
 
