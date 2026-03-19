@@ -6,6 +6,7 @@ import {
   shift,
   size,
   type Placement,
+  type ReferenceElement,
 } from '@floating-ui/dom'
 import {
   computed,
@@ -28,7 +29,7 @@ export interface OverlayPositionOptions {
 }
 
 export function useOverlayPosition(
-  anchorRef: Ref<HTMLElement | null>,
+  anchorRef: Ref<ReferenceElement | null>,
   floatingRef: Ref<HTMLElement | null>,
   options: OverlayPositionOptions = {},
 ) {

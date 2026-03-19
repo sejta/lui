@@ -1,13 +1,9 @@
 import { computed, defineComponent, h, ref, Teleport, toRef, type PropType } from 'vue'
 
 import { useClickOutside, useControllableState, useEscape, useOverlayPosition } from '../../composables'
+import { renderMenuContent, type UiMenuItem } from '../menu/shared'
 
-export interface UiDropdownItem {
-  label?: string
-  value?: string
-  disabled?: boolean
-  type?: 'item' | 'separator'
-}
+export interface UiDropdownItem extends UiMenuItem {}
 
 export interface UiDropdownProps {
   items: UiDropdownItem[]
@@ -106,45 +102,18 @@ export const UiDropdown = defineComponent({
 
       const overlay = isOpen.value
         ? h(Teleport, { to: 'body' }, [
-            h(
-              'div',
-              {
-                ref: floatingRef,
-                class: 'lui-dropdown__menu lui-surface',
-                style: floatingStyles.value,
-                role: 'menu',
-                'data-placement': placement.value,
+            renderMenuContent({
+              items: props.items,
+              menuRef: (value) => {
+                floatingRef.value = value as HTMLElement | null
               },
-              props.items.map((item, index) => {
-                if (item.type === 'separator') {
-                  return h('div', {
-                    key: `separator-${index}`,
-                    class: 'lui-dropdown__separator',
-                    role: 'separator',
-                  })
-                }
-
-                return h(
-                  'button',
-                  {
-                    key: item.value ?? item.label ?? index,
-                    class: 'lui-dropdown__item',
-                    type: 'button',
-                    role: 'menuitem',
-                    disabled: item.disabled,
-                    onClick: () => {
-                      if (item.disabled) {
-                        return
-                      }
-
-                      emit('select', item)
-                      closeDropdown()
-                    },
-                  },
-                  item.label,
-                )
-              }),
-            ),
+              placement: placement.value,
+              style: floatingStyles.value as Record<string, string>,
+              onSelect: (item) => {
+                emit('select', item)
+                closeDropdown()
+              },
+            }),
           ])
         : null
 

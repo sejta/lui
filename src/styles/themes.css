@@ -14,6 +14,9 @@
   --lui-color-accent-hover: #567fa8;
   --lui-color-accent-active: #4d7398;
   --lui-color-focus: rgb(95 143 190 / 0.16);
+  --lui-color-success: #4f8a69;
+  --lui-color-warning: #b98a42;
+  --lui-color-info: #5f8fbe;
   --lui-color-danger: #e26d5c;
   --lui-color-danger-hover: #d46252;
 }
@@ -33,6 +36,9 @@
   --lui-color-accent-hover: #8ab0d3;
   --lui-color-accent-active: #6f96ba;
   --lui-color-focus: rgb(126 163 199 / 0.2);
+  --lui-color-success: #74a889;
+  --lui-color-warning: #d0a462;
+  --lui-color-info: #7ea3c7;
   --lui-color-danger: #d8897e;
   --lui-color-danger-hover: #cb7b70;
 }

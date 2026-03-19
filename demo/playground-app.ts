@@ -3,14 +3,25 @@ import { defineComponent, h, ref } from 'vue'
 import {
   UiButton,
   UiCard,
+  UiCheckbox,
+  UiContextMenu,
   UiDialog,
   UiDivider,
   UiDropdown,
+  UiField,
   UiInput,
   UiPanel,
   UiPopover,
+  UiRadioGroup,
+  UiSwitch,
   UiTabs,
   UiTextarea,
+  UiToastViewport,
+  UiTooltip,
+  showToast,
+  useToast,
+  type UiRadioItem,
+  type UiContextMenuItem,
   type UiDropdownItem,
   type UiTabsItem,
 } from '../src'
@@ -30,6 +41,13 @@ export const PlaygroundApp = defineComponent({
     const name = ref('')
     const email = ref('')
     const notes = ref('Short notes help expose spacing and control rhythm.')
+    const emailNotifications = ref(true)
+    const weeklyDigest = ref(false)
+    const desktopAlerts = ref(true)
+    const compactMode = ref(false)
+    const betaFeatures = ref(false)
+    const appearanceMode = ref('system')
+    const requireApproval = ref(false)
     const infoDialogOpen = ref(false)
     const confirmDialogOpen = ref(false)
     const formDialogOpen = ref(false)
@@ -38,6 +56,8 @@ export const PlaygroundApp = defineComponent({
     const popoverNote = ref('Popover content can hold lightweight explanatory UI and compact actions.')
     const activeSettingsTab = ref('general')
     const dropdownSelection = ref('No action selected yet.')
+    const contextMenuSelection = ref('No context action selected yet.')
+    const { clearToasts } = useToast()
     const settingsTabs: UiTabsItem[] = [
       { label: 'General', value: 'general' },
       { label: 'Appearance', value: 'appearance' },
@@ -50,16 +70,74 @@ export const PlaygroundApp = defineComponent({
       { label: 'Archive', value: 'archive' },
       { label: 'Delete', value: 'delete', disabled: true },
     ]
+    const contextMenuItems: UiContextMenuItem[] = [
+      { label: 'Open details', value: 'open-details' },
+      { label: 'Pin panel', value: 'pin-panel' },
+      { type: 'separator' },
+      { label: 'Move to archive', value: 'move-to-archive' },
+      { label: 'Delete item', value: 'delete-item', disabled: true },
+    ]
+    const appearanceOptions: UiRadioItem[] = [
+      { label: 'System', value: 'system', description: 'Follow the OS appearance automatically.' },
+      { label: 'Light', value: 'light', description: 'Use a lighter canvas for dense daytime work.' },
+      { label: 'Dark', value: 'dark', description: 'Use darker surfaces for low-light sessions.' },
+      { label: 'High contrast', value: 'contrast', description: 'Reserved for later tuning.', disabled: true },
+    ]
 
     const toggleTheme = () => {
       theme.value = theme.value === 'light' ? 'dark' : 'light'
       document.documentElement.dataset.luiTheme = theme.value
     }
 
+    const triggerToast = (type: 'success' | 'info' | 'warning' | 'error') => {
+      const presets = {
+        success: {
+          title: 'Changes saved',
+          description: 'Project settings were updated successfully.',
+        },
+        info: {
+          title: 'Sync started',
+          description: 'Background sync is running for the current workspace.',
+        },
+        warning: {
+          title: 'Review suggested',
+          description: 'A few fields still use fallback defaults.',
+        },
+        error: {
+          title: 'Publish failed',
+          description: 'The release could not be queued for deployment.',
+        },
+      } as const
+
+      showToast({
+        type,
+        ...presets[type],
+      })
+    }
+
+    const triggerStackedToasts = () => {
+      showToast({
+        type: 'info',
+        title: 'Import queued',
+        description: 'The file is waiting for validation.',
+      })
+      showToast({
+        type: 'success',
+        title: 'Draft restored',
+        description: 'Recovered the last unsaved version from local state.',
+      })
+      showToast({
+        type: 'warning',
+        title: 'Permissions changed',
+        description: 'A few workspace actions may need to be re-authorized.',
+      })
+    }
+
     document.documentElement.dataset.luiTheme = theme.value
 
     return () =>
       h('div', { class: 'lui-root', 'data-lui-theme': theme.value }, [
+        h(UiToastViewport),
         h('div', { class: 'playground-shell' }, [
           h('aside', { class: 'playground-sidebar lui-surface' }, [
             h('div', { class: 'playground-sidebar__inner lui-stack' }, [
@@ -140,6 +218,159 @@ export const PlaygroundApp = defineComponent({
                       },
                     }),
                   ),
+                ],
+              }),
+              h(UiPanel, { title: 'Form Controls' }, {
+                default: () => [
+                  sectionIntro('Lightweight controls for settings screens and tool panels. Use Tab to move focus, Space to toggle checkbox and switch controls, and Arrow keys inside the radio group.'),
+                  h('div', { class: 'playground-card-grid' }, [
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Simple settings section'),
+                        h(UiField, {
+                          label: 'Project notifications',
+                          description: 'Choose which activity should reach the team inbox.',
+                        }, {
+                          default: ({ controlId, describedBy, invalid, labelledBy, disabled }: Record<string, string | boolean | undefined>) =>
+                            h('div', { class: 'lui-stack' }, [
+                              h(UiCheckbox, {
+                                id: `${controlId}-email`,
+                                modelValue: emailNotifications.value,
+                                disabled: Boolean(disabled),
+                                'aria-labelledby': labelledBy,
+                                'aria-describedby': describedBy,
+                                'aria-invalid': invalid ? 'true' : undefined,
+                                'onUpdate:modelValue': (value: boolean) => {
+                                  emailNotifications.value = value
+                                },
+                              }, () => 'Email on deploy failures'),
+                              h(UiCheckbox, {
+                                id: `${controlId}-digest`,
+                                modelValue: weeklyDigest.value,
+                                'aria-describedby': describedBy,
+                                'onUpdate:modelValue': (value: boolean) => {
+                                  weeklyDigest.value = value
+                                },
+                              }, () => 'Weekly digest summary'),
+                              h(UiCheckbox, {
+                                id: `${controlId}-pager`,
+                                modelValue: false,
+                                disabled: true,
+                              }, () => 'Pager escalation (disabled)'),
+                            ]),
+                        }),
+                      ]),
+                    ]),
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Switch row'),
+                        h(UiField, {
+                          label: 'Workspace behavior',
+                          description: 'Use switches for immediate on/off product settings.',
+                        }, {
+                          default: ({ controlId, describedBy }: Record<string, string | boolean | undefined>) =>
+                            h('div', { class: 'playground-switch-list' }, [
+                              h('div', { class: 'playground-switch-row' }, [
+                                h('div', { class: 'lui-stack' }, [
+                                  h('span', { class: 'lui-subtitle' }, 'Desktop alerts'),
+                                  h('p', null, 'Show real-time delivery events in the toolbar.'),
+                                ]),
+                                h(UiSwitch, {
+                                  id: `${controlId}-alerts`,
+                                  modelValue: desktopAlerts.value,
+                                  'aria-describedby': describedBy,
+                                  'onUpdate:modelValue': (value: boolean) => {
+                                    desktopAlerts.value = value
+                                  },
+                                }),
+                              ]),
+                              h('div', { class: 'playground-switch-row' }, [
+                                h('div', { class: 'lui-stack' }, [
+                                  h('span', { class: 'lui-subtitle' }, 'Compact mode'),
+                                  h('p', null, 'Reduce spacing in dense operational views.'),
+                                ]),
+                                h(UiSwitch, {
+                                  id: `${controlId}-compact`,
+                                  modelValue: compactMode.value,
+                                  'aria-describedby': describedBy,
+                                  'onUpdate:modelValue': (value: boolean) => {
+                                    compactMode.value = value
+                                  },
+                                }),
+                              ]),
+                              h('div', { class: 'playground-switch-row' }, [
+                                h('div', { class: 'lui-stack' }, [
+                                  h('span', { class: 'lui-subtitle' }, 'Beta features'),
+                                  h('p', null, 'Temporarily unavailable for this workspace.'),
+                                ]),
+                                h(UiSwitch, {
+                                  id: `${controlId}-beta`,
+                                  modelValue: betaFeatures.value,
+                                  disabled: true,
+                                  'aria-describedby': describedBy,
+                                }),
+                              ]),
+                            ]),
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  h('div', { class: 'playground-card-grid' }, [
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Radio selection'),
+                        h(UiField, {
+                          label: 'Appearance mode',
+                          description: 'A compact radio group is enough for a small fixed set of options.',
+                        }, {
+                          default: ({ controlId, describedBy, labelledBy }: Record<string, string | boolean | undefined>) =>
+                            h(UiRadioGroup, {
+                              id: controlId,
+                              modelValue: appearanceMode.value,
+                              items: appearanceOptions,
+                              'aria-describedby': describedBy,
+                              'aria-labelledby': labelledBy,
+                              'onUpdate:modelValue': (value: string) => {
+                                appearanceMode.value = value
+                              },
+                            }),
+                        }),
+                      ]),
+                    ]),
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Field help and error'),
+                        h(UiField, {
+                          label: 'Release rules',
+                          description: 'Field gives a common structure for label, help text, and validation copy.',
+                          error: requireApproval.value ? '' : 'Confirm the release checklist before saving.',
+                        }, {
+                          default: ({ controlId, describedBy, invalid, labelledBy }: Record<string, string | boolean | undefined>) =>
+                            h(UiCheckbox, {
+                              id: controlId,
+                              modelValue: requireApproval.value,
+                              invalid: Boolean(invalid),
+                              'aria-labelledby': labelledBy,
+                              'aria-describedby': describedBy,
+                              'onUpdate:modelValue': (value: boolean) => {
+                                requireApproval.value = value
+                              },
+                            }, () => 'I reviewed the release checklist and approve the rollout'),
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  h(UiCard, null, () => [
+                    h('div', { class: 'lui-stack' }, [
+                      h('h3', { class: 'lui-subtitle' }, 'Keyboard and state notes'),
+                      h('div', { class: 'playground-state-list' }, [
+                        h('div', { class: 'playground-state-item' }, 'Tab moves between controls in reading order.'),
+                        h('div', { class: 'playground-state-item' }, 'Space toggles the focused checkbox or switch.'),
+                        h('div', { class: 'playground-state-item' }, 'Arrow keys move selection inside the radio group.'),
+                        h('div', { class: 'playground-state-item' }, 'Disabled and invalid states stay visible without changing layout rhythm.'),
+                      ]),
+                    ]),
+                  ]),
                 ],
               }),
               h(UiPanel, { title: 'Cards' }, {
@@ -521,6 +752,202 @@ export const PlaygroundApp = defineComponent({
                         ]),
                         h('div', { class: 'playground-scroll-spacer' }),
                       ]),
+                    ]),
+                  ]),
+                ],
+              }),
+              h(UiPanel, { title: 'Context Menu' }, {
+                default: () => [
+                  sectionIntro('ContextMenu reuses the same menu overlay foundation as Dropdown, but opens from cursor coordinates on contextmenu.'),
+                  h('div', { class: 'playground-dropdown-grid' }, [
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Panel context menu'),
+                        h('p', null, 'Right-click inside the panel body to open the menu at the cursor position.'),
+                        h(UiContextMenu, {
+                          items: contextMenuItems,
+                          onSelect: (item: UiContextMenuItem) => {
+                            contextMenuSelection.value = `Panel context menu: ${item.label}`
+                          },
+                        }, {
+                          default: () =>
+                            h('div', { class: 'playground-context-target' }, [
+                              h('strong', null, 'Project panel'),
+                              h('p', null, 'Right-click anywhere in this surface.'),
+                            ]),
+                        }),
+                      ]),
+                    ]),
+                    h(UiCard, { class: 'playground-card-edge' }, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Viewport edge'),
+                        h('p', null, 'Open the menu near the lower-right area to verify flip and viewport shifting.'),
+                        h(UiContextMenu, {
+                          items: contextMenuItems,
+                          onSelect: (item: UiContextMenuItem) => {
+                            contextMenuSelection.value = `Edge context menu: ${item.label}`
+                          },
+                        }, {
+                          default: () =>
+                            h('div', { class: 'playground-context-target playground-context-target--edge' }, [
+                              h('strong', null, 'Edge zone'),
+                              h('p', null, 'Right-click near the far edge.'),
+                            ]),
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  h(UiCard, null, () => [
+                    h('div', { class: 'lui-stack' }, [
+                      h('h3', { class: 'lui-subtitle' }, 'Repeated right click reposition'),
+                      h('p', null, 'Keep the menu open and right-click in another spot to move it without closing first.'),
+                      h(UiContextMenu, {
+                        items: contextMenuItems,
+                        onSelect: (item: UiContextMenuItem) => {
+                          contextMenuSelection.value = `Repositioned context menu: ${item.label}`
+                        },
+                      }, {
+                        default: () =>
+                          h('div', { class: 'playground-context-target playground-context-target--wide' }, [
+                            h('strong', null, 'Reposition zone'),
+                            h('p', null, 'Right-click multiple places in this area.'),
+                          ]),
+                      }),
+                      h('p', null, contextMenuSelection.value),
+                    ]),
+                  ]),
+                  h(UiCard, null, () => [
+                    h('div', { class: 'lui-stack' }, [
+                      h('h3', { class: 'lui-subtitle' }, 'Scrollable container'),
+                      h('p', null, 'The context menu should escape overflow clipping and still open from the clicked point inside the scroller.'),
+                      h('div', { class: 'playground-scroll-box' }, [
+                        h('div', { class: 'playground-scroll-spacer' }, 'Scroll down inside this area'),
+                        h(UiContextMenu, {
+                          items: contextMenuItems,
+                          onSelect: (item: UiContextMenuItem) => {
+                            contextMenuSelection.value = `Scroll context menu: ${item.label}`
+                          },
+                        }, {
+                          default: () =>
+                            h('div', { class: 'playground-scroll-row playground-context-target' }, [
+                              h('span', null, 'Scrollable row target'),
+                              h('span', { class: 'lui-text-muted' }, 'Right-click here'),
+                            ]),
+                        }),
+                        h('div', { class: 'playground-scroll-spacer' }),
+                      ]),
+                    ]),
+                  ]),
+                ],
+              }),
+              h(UiPanel, { title: 'Tooltip' }, {
+                default: () => [
+                  sectionIntro('Tooltip is a short, non-interactive hint built on the same positioning foundation, opened by hover or focus with a small delay.'),
+                  h('div', { class: 'playground-dropdown-grid' }, [
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Default button'),
+                        h('p', null, 'Use it for compact button hints without introducing popover behavior.'),
+                        h(UiTooltip, { content: 'Create a new draft from the current workspace.' }, {
+                          trigger: () => h(UiButton, { variant: 'secondary' }, () => 'New draft'),
+                        }),
+                      ]),
+                    ]),
+                    h(UiCard, { class: 'playground-card-edge' }, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Viewport edge'),
+                        h('p', null, 'Placed near the edge to verify flip and shift in a tooltip scenario.'),
+                        h('div', { class: 'playground-align-end' }, [
+                          h(UiTooltip, {
+                            content: 'Inspect the last sync status without opening a larger panel.',
+                            placement: 'top-end',
+                          }, {
+                            trigger: () => h(UiButton, { variant: 'ghost' }, () => 'Inspect'),
+                          }),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                  h(UiCard, null, () => [
+                    h('div', { class: 'lui-stack' }, [
+                      h('h3', { class: 'lui-subtitle' }, 'Icon-like action'),
+                      h('p', null, 'A tooltip matters most when the trigger is visually compact.'),
+                      h('div', { class: 'lui-cluster' }, [
+                        h(UiTooltip, { content: 'Refresh project metrics' }, {
+                          trigger: () => h(UiButton, { size: 'sm', variant: 'ghost', class: 'playground-icon-button' }, () => 'R'),
+                        }),
+                        h(UiTooltip, { content: 'Duplicate current selection' }, {
+                          trigger: () => h(UiButton, { size: 'sm', variant: 'ghost', class: 'playground-icon-button' }, () => 'D'),
+                        }),
+                        h(UiTooltip, { content: 'Archive this item' }, {
+                          trigger: () => h(UiButton, { size: 'sm', variant: 'ghost', class: 'playground-icon-button' }, () => 'A'),
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  h(UiCard, null, () => [
+                    h('div', { class: 'lui-stack' }, [
+                      h('h3', { class: 'lui-subtitle' }, 'Toolbar and compact controls'),
+                      h('p', null, 'The same primitive should work in denser tool rows without becoming interactive.'),
+                      h('div', { class: 'playground-toolbar-row' }, [
+                        h(UiTooltip, { content: 'Refresh active records' }, {
+                          trigger: () => h(UiButton, { size: 'sm', variant: 'secondary' }, () => 'Refresh'),
+                        }),
+                        h(UiDivider, { orientation: 'vertical' }),
+                        h(UiTooltip, { content: 'Open filter rules' }, {
+                          trigger: () => h(UiButton, { size: 'sm', variant: 'ghost' }, () => 'Filter'),
+                        }),
+                        h(UiTooltip, { content: 'Export the visible dataset' }, {
+                          trigger: () => h(UiButton, { size: 'sm', variant: 'ghost' }, () => 'Export'),
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                ],
+              }),
+              h(UiPanel, { title: 'Toast' }, {
+                default: () => [
+                  sectionIntro('Toast is a small app feedback layer for save states, sync updates, warnings, and compact errors without introducing a larger notification framework.'),
+                  h('div', { class: 'playground-card-grid' }, [
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Toast types'),
+                        h('p', null, 'Trigger one toast at a time for the common feedback cases.'),
+                        h('div', { class: 'lui-cluster' }, [
+                          h(UiButton, { size: 'sm', onClick: () => { triggerToast('success') } }, () => 'Success'),
+                          h(UiButton, { size: 'sm', variant: 'secondary', onClick: () => { triggerToast('info') } }, () => 'Info'),
+                          h(UiButton, { size: 'sm', variant: 'ghost', onClick: () => { triggerToast('warning') } }, () => 'Warning'),
+                          h(UiButton, { size: 'sm', variant: 'secondary', onClick: () => { triggerToast('error') } }, () => 'Error'),
+                        ]),
+                      ]),
+                    ]),
+                    h(UiCard, null, () => [
+                      h('div', { class: 'lui-stack' }, [
+                        h('h3', { class: 'lui-subtitle' }, 'Stacking and manual close'),
+                        h('p', null, 'Spawn several toasts together and close any one of them from the viewport.'),
+                        h('div', { class: 'lui-cluster' }, [
+                          h(UiButton, { size: 'sm', onClick: triggerStackedToasts }, () => 'Show stacked toasts'),
+                          h(UiButton, { size: 'sm', variant: 'ghost', onClick: clearToasts }, () => 'Clear all'),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                  h(UiCard, null, () => [
+                    h('div', { class: 'lui-stack' }, [
+                      h('h3', { class: 'lui-subtitle' }, 'Auto dismiss'),
+                      h('p', null, 'Each toast closes automatically after a short timeout unless manually dismissed first.'),
+                      h(UiButton, {
+                        size: 'sm',
+                        variant: 'secondary',
+                        onClick: () => {
+                          showToast({
+                            type: 'info',
+                            title: 'Auto-dismiss preview',
+                            description: 'This toast will disappear after a short delay.',
+                            dismissAfter: 2200,
+                          })
+                        },
+                      }, () => 'Show short-lived toast'),
                     ]),
                   ]),
                 ],
