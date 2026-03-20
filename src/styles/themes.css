@@ -9,14 +9,14 @@
   --lui-color-text-muted: #667085;
   --lui-color-border: #d8dee6;
   --lui-color-border-strong: #c0c9d4;
-  --lui-color-accent: #355070;
+  --lui-color-accent: #496684;
   --lui-color-accent-contrast: #ffffff;
-  --lui-color-accent-hover: #3d5b7f;
-  --lui-color-accent-active: #2e4662;
-  --lui-color-focus: rgb(53 80 112 / 0.18);
+  --lui-color-accent-hover: #557394;
+  --lui-color-accent-active: #3f5974;
+  --lui-color-focus: rgb(73 102 132 / 0.18);
   --lui-color-success: #4f8a69;
   --lui-color-warning: #b98a42;
-  --lui-color-info: #355070;
+  --lui-color-info: #496684;
   --lui-color-danger: #e26d5c;
   --lui-color-danger-hover: #d46252;
 }
@@ -31,14 +31,14 @@
   --lui-color-text-muted: #9aa7b8;
   --lui-color-border: #313d4c;
   --lui-color-border-strong: #425163;
-  --lui-color-accent: #6f86a2;
+  --lui-color-accent: #7b93ae;
   --lui-color-accent-contrast: #0f1720;
-  --lui-color-accent-hover: #7e94af;
-  --lui-color-accent-active: #5f7793;
-  --lui-color-focus: rgb(111 134 162 / 0.24);
+  --lui-color-accent-hover: #8aa1ba;
+  --lui-color-accent-active: #6d86a1;
+  --lui-color-focus: rgb(123 147 174 / 0.24);
   --lui-color-success: #74a889;
   --lui-color-warning: #d0a462;
-  --lui-color-info: #6f86a2;
+  --lui-color-info: #7b93ae;
   --lui-color-danger: #d8897e;
   --lui-color-danger-hover: #cb7b70;
 }

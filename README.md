@@ -31,7 +31,7 @@ Current composables:
 - `useOverlayPosition`
 - `useToast`
 
-Directional exports at `1.0.1`:
+Directional exports at `1.0.2`:
 
 - `UiEmptyState`
 - app-shell contracts from `@sejta/lui/app`
@@ -65,7 +65,7 @@ From GitHub by release tag:
 ```json
 {
   "dependencies": {
-    "@sejta/lui": "github:sejta/lui#v1.0.1"
+    "@sejta/lui": "github:sejta/lui#v1.0.2"
   }
 }
 ```

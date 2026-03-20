@@ -141,7 +141,7 @@ This keeps the library usable across admin tools, settings interfaces, and compa
 
 The package should reduce repetitive UI work, not replace application design decisions entirely.
 
-## Out Of Scope For 1.0.1
+## Out Of Scope For 1.0.2
 
 The style system intentionally avoids:
 

@@ -112,7 +112,7 @@ This is the core of the public package.
 
 The `app` layer is reserved for higher-level application structure such as shells, sidebars, and toolbars.
 
-At `1.0.1`, this layer is still a contract layer rather than a finished set of shipped layout components. It is exported to show intended package direction, but consumers should treat it as less mature than the main component primitives.
+At `1.0.2`, this layer is still a contract layer rather than a finished set of shipped layout components. It is exported to show intended package direction, but consumers should treat it as less mature than the main component primitives.
 
 ## Current Maturity
 
