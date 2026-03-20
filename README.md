@@ -5,7 +5,7 @@
 It is intentionally small:
 
 - reusable product-facing primitives
-- muted visual direction
+- muted slate-leaning visual direction
 - flat public API
 - minimal dependencies
 - no form framework
@@ -31,7 +31,7 @@ Current composables:
 - `useOverlayPosition`
 - `useToast`
 
-Directional exports at `1.0.0`:
+Directional exports at `1.0.1`:
 
 - `UiEmptyState`
 - app-shell contracts from `@sejta/lui/app`
@@ -65,7 +65,7 @@ From GitHub by release tag:
 ```json
 {
   "dependencies": {
-    "@sejta/lui": "github:sejta/lui#v1.0.0"
+    "@sejta/lui": "github:sejta/lui#v1.0.1"
   }
 }
 ```
@@ -120,6 +120,8 @@ export default defineComponent({
 ## Styling And Theme
 
 `lui` ships with global CSS tokens and utility styles.
+
+The default accent direction is a restrained slate-blue palette tuned for flat controls, settings screens, and admin UI.
 
 Theme switching is currently attribute-based:
 

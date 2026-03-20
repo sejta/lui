@@ -53,7 +53,7 @@ These are the main reusable components exposed today.
 
 Not every export has the same maturity.
 
-Directional or lightweight contracts at `1.0.0`:
+Directional or lightweight contracts at `1.0.1`:
 
 - `UiEmptyState`
 - app-shell exports from `@sejta/lui/app`
@@ -149,7 +149,7 @@ Keep these in the application instead of the library:
 
 A good rule is simple: if the component mostly reflects one product's business model, it does not belong in `lui`.
 
-## Out Of Scope For 1.0.0
+## Out Of Scope For 1.0.1
 
 The package intentionally does not include:
 

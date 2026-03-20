@@ -11,6 +11,8 @@ The styling approach is built around:
 - theme switching through a document attribute
 - component classes that consume shared tokens
 
+The default palette uses a restrained slate-blue accent rather than a bright product color. The goal is to keep buttons, switches, focus states, and selected controls visually calm in dense application UI.
+
 Consumers are expected to import the package stylesheet once near the frontend entry point:
 
 ```ts
@@ -42,6 +44,8 @@ Current themes:
 
 - `light`
 - `dark`
+
+The light theme uses a darker slate-blue accent family. The dark theme uses a softer companion accent so active controls stay readable without glowing too hard against dark surfaces.
 
 ### `base.css`
 
@@ -118,6 +122,7 @@ Avoid:
 The package styling follows a few consistent principles:
 
 - muted, product-oriented visual language
+- restrained slate-blue accent instead of a loud brand color
 - low ornament by default
 - accessible contrast and focus visibility
 - surfaces and controls built from shared tokens
@@ -136,7 +141,7 @@ This keeps the library usable across admin tools, settings interfaces, and compa
 
 The package should reduce repetitive UI work, not replace application design decisions entirely.
 
-## Out Of Scope For 1.0.0
+## Out Of Scope For 1.0.1
 
 The style system intentionally avoids:
 
