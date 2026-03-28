@@ -19,8 +19,9 @@ Current component set:
 - form controls: `UiCheckbox`, `UiSwitch`, `UiRadioGroup`, `UiField`
 - surfaces and structure: `UiCard`, `UiPanel`, `UiDivider`
 - overlays: `UiDialog`, `UiDropdown`, `UiContextMenu`, `UiPopover`, `UiTooltip`
-- feedback: `UiToast`, `UiToastViewport`
+- feedback: `UiToast`, `UiToastViewport`, `UiAlert`
 - navigation: `UiTabs`
+- status: `UiBadge`
 
 Current composables:
 
@@ -30,8 +31,10 @@ Current composables:
 - `useScrollLock`
 - `useOverlayPosition`
 - `useToast`
+- `useFocusTrap`
+- `useRovingTabindex`
 
-Directional exports at `1.0.2`:
+Directional exports at `1.0.3`:
 
 - `UiEmptyState`
 - app-shell contracts from `@sejta/lui/app`
@@ -155,7 +158,7 @@ The shared positioning layer is exposed through:
 
 ## Toast Usage
 
-Toast is intentionally minimal: no actions, no promise API, no notification framework.
+Toast is intentionally minimal: no promise API, no notification framework.
 
 Mount one viewport near the app root:
 
@@ -181,6 +184,21 @@ showToast({
   description: 'Project settings were updated successfully.',
 })
 ```
+
+With an action button:
+
+```ts
+showToast({
+  type: 'info',
+  title: 'Draft deleted',
+  action: {
+    label: 'Undo',
+    onClick: () => restoreDraft(),
+  },
+})
+```
+
+Clicking the action button calls `onClick` and dismisses the toast automatically.
 
 Available toast types:
 
@@ -426,12 +444,83 @@ h(UiTooltip, { content: 'Refresh project metrics' }, {
 ```ts
 h(UiToastViewport)
 
+// basic
+showToast({ type: 'success', title: 'Saved' })
+
+// with description
 showToast({
-  type: 'success',
-  title: 'Saved',
-  description: 'Changes were stored successfully.',
+  type: 'error',
+  title: 'Export failed',
+  description: 'Check your connection and try again.',
+})
+
+// with action
+showToast({
+  type: 'info',
+  title: 'Draft deleted',
+  action: { label: 'Undo', onClick: () => restoreDraft() },
 })
 ```
+
+### UiAlert
+
+```ts
+// minimal — just text
+h(UiAlert, { variant: 'warning' }, {
+  default: () => 'Your API key expires in 3 days.',
+})
+
+// with title
+h(UiAlert, { variant: 'danger', title: 'Billing issue' }, {
+  default: () => 'Your payment method failed. Update it to avoid service interruption.',
+})
+
+// with action
+h(UiAlert, { variant: 'info', title: 'New version available' }, {
+  default: () => 'Restart to apply the update.',
+  actions: () => h(UiButton, { size: 'sm', variant: 'secondary' }, () => 'Restart now'),
+})
+```
+
+Available variants: `info` (default), `success`, `warning`, `danger`.
+
+Unlike `UiToast`, `UiAlert` is inline and persistent — it renders in the document flow and stays until the consumer removes it.
+
+### UiBadge
+
+```ts
+h(UiBadge, { variant: 'success' }, () => 'Active')
+h(UiBadge, { variant: 'warning' }, () => 'Pending')
+h(UiBadge, { variant: 'danger' }, () => 'Expired')
+h(UiBadge, { variant: 'neutral' }, () => 'Archived')
+h(UiBadge, { variant: 'info' }, () => 'Admin')
+h(UiBadge, { variant: 'neutral', size: 'sm' }, () => 'Draft')
+```
+
+Available variants: `neutral` (default), `success`, `warning`, `danger`, `info`.
+Available sizes: `md` (default), `sm`.
+
+### Dropdown With Icons
+
+Menu items accept an optional `icon` component:
+
+```ts
+import MyIcon from './icons/MyIcon.vue'
+
+h(UiDropdown, {
+  items: [
+    { label: 'Open', value: 'open', icon: MyIcon },
+    { label: 'Duplicate', value: 'duplicate' },
+    { type: 'separator' },
+    { label: 'Archive', value: 'archive' },
+  ],
+  onSelect: (item) => console.log(item.value),
+}, {
+  trigger: () => h(UiButton, { variant: 'secondary' }, () => 'Actions'),
+})
+```
+
+The same `icon` field works for `UiContextMenu` items.
 
 ## Package Exports
 
@@ -463,8 +552,6 @@ Deliberately not included yet:
 - form framework
 - validation system
 - notification framework
-
-`UiSelect` stays out until there is a real product use-case.
 
 ## Project References
 

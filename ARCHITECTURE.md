@@ -92,6 +92,8 @@ The composables layer contains behavior that is reused by multiple components:
 - body scroll locking
 - overlay positioning
 - toast state management
+- focus trap for modal surfaces
+- roving tabindex for keyboard navigation within groups
 
 These modules should stay policy-light. They exist to support primitives, not to define application behavior.
 
@@ -105,6 +107,8 @@ The components layer contains the reusable controls and surfaces that consumers 
 - tabs
 - overlays
 - toast UI
+- inline alert banners
+- status badges
 
 This is the core of the public package.
 
@@ -124,9 +128,11 @@ Shipped and usable:
 - composables
 - core form controls
 - surface primitives
-- overlay primitives
-- tabs
-- toast UI
+- overlay primitives with keyboard navigation
+- tabs with arrow key navigation
+- toast UI with optional action
+- inline alert banners
+- status badges
 
 Still lightweight or directional:
 
@@ -142,7 +148,8 @@ Overlay components share a common implementation model:
 - floating content is rendered through `Teleport`
 - position is managed through `useOverlayPosition`
 - dismiss behavior is standardized through outside-click and Escape handling
-- dialog uses body scroll locking while open
+- dialog uses body scroll locking and focus trapping while open; focus returns to the trigger on close
+- menus focus the first enabled item on open and support arrow key navigation between items
 
 This keeps dropdowns, popovers, tooltips, context menus, and dialogs aligned on the same behavioral foundation instead of each component solving positioning and dismissal independently.
 

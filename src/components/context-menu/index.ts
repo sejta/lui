@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, Teleport, toRef, type PropType } from 'vue'
+import { computed, defineComponent, h, nextTick, ref, Teleport, toRef, watch, type PropType } from 'vue'
 import { type Placement, type VirtualElement } from '@floating-ui/dom'
 
 import { useClickOutside, useControllableState, useEscape, useOverlayPosition } from '../../composables'
@@ -103,6 +103,13 @@ export const UiContextMenu = defineComponent({
       closeMenu()
     }, {
       enabled: isOpen,
+    })
+
+    watch(floatingRef, async (menu) => {
+      if (!menu || !isOpen.value) return
+      await nextTick()
+      const firstItem = menu.querySelector<HTMLElement>('[role="menuitem"]:not([disabled])')
+      firstItem?.focus()
     })
 
     return () => {

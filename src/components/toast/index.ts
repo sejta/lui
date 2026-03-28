@@ -12,34 +12,54 @@ export const UiToast = defineComponent({
     },
   },
   setup(props) {
-    const className = computed(() => ['lui-toast', props.toast.showCloseButton ? 'lui-toast--closable' : null].filter(Boolean).join(' '))
+    const hasActions = computed(() => Boolean(props.toast.action || props.toast.showCloseButton))
+
+    const handleAction = () => {
+      props.toast.action?.onClick()
+      dismissToast(props.toast.id)
+    }
 
     return () =>
       h(
         'div',
         {
-          class: className.value,
+          class: 'lui-toast',
           'data-type': props.toast.type,
           role: props.toast.type === 'error' ? 'alert' : 'status',
         },
         [
           h('div', { class: 'lui-toast__body' }, [
             h('div', { class: 'lui-toast__title' }, props.toast.title),
-            props.toast.description ? h('p', { class: 'lui-toast__description' }, props.toast.description) : null,
+            props.toast.description
+              ? h('p', { class: 'lui-toast__description' }, props.toast.description)
+              : null,
           ]),
-          props.toast.showCloseButton
-            ? h(
-                'button',
-                {
-                  class: 'lui-toast__close',
-                  type: 'button',
-                  'aria-label': 'Dismiss notification',
-                  onClick: () => {
-                    dismissToast(props.toast.id)
-                  },
-                },
-                '×',
-              )
+          hasActions.value
+            ? h('div', { class: 'lui-toast__actions' }, [
+                props.toast.action
+                  ? h(
+                      'button',
+                      {
+                        class: 'lui-toast__action',
+                        type: 'button',
+                        onClick: handleAction,
+                      },
+                      props.toast.action.label,
+                    )
+                  : null,
+                props.toast.showCloseButton
+                  ? h(
+                      'button',
+                      {
+                        class: 'lui-toast__close',
+                        type: 'button',
+                        'aria-label': 'Dismiss notification',
+                        onClick: () => dismissToast(props.toast.id),
+                      },
+                      '×',
+                    )
+                  : null,
+              ])
             : null,
         ],
       )

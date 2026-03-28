@@ -1,6 +1,6 @@
-import { computed, defineComponent, h, toRef, type PropType } from 'vue'
+import { computed, defineComponent, h, ref, toRef, type PropType } from 'vue'
 
-import { useControllableState } from '../../composables'
+import { useControllableState, useRovingTabindex } from '../../composables'
 
 export interface UiTabsItem {
   label: string
@@ -34,6 +34,8 @@ export const UiTabs = defineComponent({
     change: (value: string) => typeof value === 'string',
   },
   setup(props, { emit, slots, attrs }) {
+    const tablistRef = ref<HTMLElement | null>(null)
+
     const state = useControllableState<string>({
       value: toRef(props, 'modelValue'),
       defaultValue: props.defaultValue ?? props.items[0]?.value,
@@ -55,11 +57,21 @@ export const UiTabs = defineComponent({
       state.setValue(value)
     }
 
+    useRovingTabindex(tablistRef, {
+      orientation: toRef(props, 'orientation') as ReturnType<typeof toRef<'horizontal' | 'vertical'>>,
+      itemSelector: '.lui-tabs__tab:not([disabled])',
+      onFocusItem: (el) => {
+        const value = (el as HTMLElement & { dataset: DOMStringMap }).dataset.value
+        if (value) selectTab(value)
+      },
+    })
+
     return () =>
       h('div', { ...attrs, class: className.value, 'data-orientation': props.orientation }, [
         h(
           'div',
           {
+            ref: tablistRef,
             class: 'lui-tabs__list',
             role: 'tablist',
             'aria-orientation': props.orientation,
@@ -74,6 +86,8 @@ export const UiTabs = defineComponent({
                 type: 'button',
                 role: 'tab',
                 disabled: item.disabled,
+                tabindex: item.value === activeValue.value ? 0 : -1,
+                'data-value': item.value,
                 'data-active': item.value === activeValue.value ? 'true' : 'false',
                 'aria-selected': item.value === activeValue.value,
                 onClick: () => selectTab(item.value, item.disabled),

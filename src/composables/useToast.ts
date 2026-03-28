@@ -2,17 +2,24 @@ import { readonly, ref } from 'vue'
 
 export type UiToastType = 'success' | 'info' | 'warning' | 'error'
 
+export interface UiToastAction {
+  label: string
+  onClick: () => void
+}
+
 export interface ShowToastOptions {
   type?: UiToastType
   title: string
   description?: string
   dismissAfter?: number
   showCloseButton?: boolean
+  action?: UiToastAction
 }
 
 export interface UiToastRecord extends Required<Pick<ShowToastOptions, 'type' | 'title' | 'dismissAfter' | 'showCloseButton'>> {
   id: number
   description?: string
+  action?: UiToastAction
 }
 
 const DEFAULT_DISMISS_AFTER = 4000
@@ -39,6 +46,7 @@ export function showToast(options: ShowToastOptions) {
     description: options.description,
     dismissAfter: options.dismissAfter ?? DEFAULT_DISMISS_AFTER,
     showCloseButton: options.showCloseButton ?? true,
+    action: options.action,
   }
 
   toasts.value = [toast, ...toasts.value]

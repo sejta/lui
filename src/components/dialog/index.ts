@@ -1,6 +1,6 @@
-import { computed, defineComponent, h, ref, Teleport, toRef } from 'vue'
+import { computed, defineComponent, h, ref, Teleport, toRef, useId } from 'vue'
 
-import { useClickOutside, useControllableState, useEscape, useScrollLock } from '../../composables'
+import { useClickOutside, useControllableState, useEscape, useFocusTrap, useScrollLock } from '../../composables'
 
 export interface UiDialogProps {
   open?: boolean
@@ -34,6 +34,7 @@ export const UiDialog = defineComponent({
   },
   setup(props, { slots, emit }) {
     const panelRef = ref<HTMLElement | null>(null)
+    const titleId = useId()
 
     const state = useControllableState<boolean>({
       value: toRef(props, 'open'),
@@ -82,6 +83,10 @@ export const UiDialog = defineComponent({
       enabled: isOpen,
     })
 
+    useFocusTrap(panelRef, {
+      enabled: isOpen,
+    })
+
     return () => {
       if (!isOpen.value) {
         return null
@@ -102,12 +107,12 @@ export const UiDialog = defineComponent({
                 class: 'lui-dialog__panel lui-surface',
                 role: 'dialog',
                 'aria-modal': 'true',
-                'aria-label': props.title,
+                'aria-labelledby': props.title ? titleId : undefined,
               },
               [
                 props.title || props.showCloseButton
                   ? h('div', { class: 'lui-dialog__header' }, [
-                      props.title ? h('h2', { class: 'lui-title' }, props.title) : h('div'),
+                      props.title ? h('h2', { id: titleId, class: 'lui-title' }, props.title) : h('div'),
                       props.showCloseButton
                         ? h(
                             'button',

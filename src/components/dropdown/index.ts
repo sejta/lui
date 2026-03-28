@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, Teleport, toRef, type PropType } from 'vue'
+import { computed, defineComponent, h, nextTick, ref, Teleport, toRef, watch, type PropType } from 'vue'
 
 import { useClickOutside, useControllableState, useEscape, useOverlayPosition } from '../../composables'
 import { renderMenuContent, type UiMenuItem } from '../menu/shared'
@@ -78,6 +78,13 @@ export const UiDropdown = defineComponent({
     }, {
       enabled: isOpen,
       ignore: [anchorRef],
+    })
+
+    watch(floatingRef, async (menu) => {
+      if (!menu || !isOpen.value) return
+      await nextTick()
+      const firstItem = menu.querySelector<HTMLElement>('[role="menuitem"]:not([disabled])')
+      firstItem?.focus()
     })
 
     return () => {
