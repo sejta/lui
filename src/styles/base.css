@@ -22,7 +22,10 @@ body {
   line-height: var(--lui-line-height-normal);
   background: var(--lui-color-bg);
   color: var(--lui-color-text);
-  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-kerning: normal;
 }
 
 body[data-lui-scroll-lock='true'] {
@@ -72,12 +75,14 @@ h2 {
   font-size: var(--lui-font-size-3);
   line-height: var(--lui-line-height-tight);
   font-weight: 600;
+  letter-spacing: -0.012em;
 }
 
 h3 {
   font-size: var(--lui-font-size-2);
   line-height: var(--lui-line-height-tight);
   font-weight: 600;
+  letter-spacing: -0.008em;
 }
 
 p {

@@ -853,10 +853,18 @@
   font-size: var(--lui-font-size-3);
   line-height: var(--lui-line-height-tight);
   font-weight: 600;
+  letter-spacing: -0.012em;
 }
 
 .lui-subtitle {
   font-size: var(--lui-font-size-2);
   line-height: var(--lui-line-height-tight);
   font-weight: 600;
+  letter-spacing: -0.008em;
+}
+
+.lui-caption {
+  font-size: var(--lui-font-size-0);
+  line-height: var(--lui-line-height-normal);
+  color: var(--lui-color-text-muted);
 }

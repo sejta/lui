@@ -1,7 +1,8 @@
 :root {
-  --lui-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --lui-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --lui-font-sans: ui-sans-serif, "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lui-font-mono: ui-monospace, "Cascadia Code", "Cascadia Mono", SFMono-Regular, Menlo, monospace;
 
+  --lui-font-size-0: 0.75rem;
   --lui-font-size-1: 0.8125rem;
   --lui-font-size-2: 0.875rem;
   --lui-font-size-3: 1.25rem;
