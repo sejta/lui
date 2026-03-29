@@ -16,24 +16,31 @@ export function useScrollLock(options: UseScrollLockOptions = {}) {
     return options.enabled ?? true
   }
 
+  const lock = () => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+    document.body.style.setProperty('--lui-scrollbar-compensation', `${scrollbarWidth}px`)
+    document.body.classList.add(className)
+    document.body.dataset.luiScrollLock = 'true'
+  }
+
+  const unlock = () => {
+    document.body.classList.remove(className)
+    document.body.dataset.luiScrollLock = 'false'
+    document.body.style.removeProperty('--lui-scrollbar-compensation')
+  }
+
   watchEffect((onCleanup) => {
     if (typeof document === 'undefined') {
       return
     }
 
     if (!resolveEnabled()) {
-      document.body.classList.remove(className)
-      document.body.dataset.luiScrollLock = 'false'
+      unlock()
       return
     }
 
-    document.body.classList.add(className)
-    document.body.dataset.luiScrollLock = 'true'
-
-    onCleanup(() => {
-      document.body.classList.remove(className)
-      document.body.dataset.luiScrollLock = 'false'
-    })
+    lock()
+    onCleanup(unlock)
   })
 
   onBeforeUnmount(() => {
@@ -41,7 +48,6 @@ export function useScrollLock(options: UseScrollLockOptions = {}) {
       return
     }
 
-    document.body.classList.remove(className)
-    document.body.dataset.luiScrollLock = 'false'
+    unlock()
   })
 }

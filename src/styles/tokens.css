@@ -37,6 +37,7 @@
 
   --lui-duration-fast: 120ms;
   --lui-duration-normal: 180ms;
+  --lui-duration-spin: 600ms;
   --lui-ease-standard: cubic-bezier(0.2, 0, 0, 1);
 
   --lui-control-height-sm: 1.75rem;

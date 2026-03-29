@@ -15,7 +15,6 @@ import {
   onMounted,
   ref,
   watch,
-  watchEffect,
   type CSSProperties,
   type Ref,
 } from 'vue'
@@ -134,12 +133,6 @@ export function useOverlayPosition(
 
   onBeforeUnmount(() => {
     stopAutoUpdate()
-  })
-
-  watchEffect(() => {
-    if (!resolveOpen()) {
-      stopAutoUpdate()
-    }
   })
 
   const floatingStyles = computed<CSSProperties>(() => ({

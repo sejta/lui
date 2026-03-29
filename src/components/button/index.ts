@@ -4,6 +4,7 @@ export interface UiButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   disabled?: boolean
+  loading?: boolean
   type?: 'button' | 'submit' | 'reset'
 }
 
@@ -19,6 +20,7 @@ export const UiButton = defineComponent({
       default: 'md',
     },
     disabled: Boolean,
+    loading: Boolean,
     type: {
       type: String as PropType<UiButtonProps['type']>,
       default: 'button',
@@ -34,9 +36,11 @@ export const UiButton = defineComponent({
           ...attrs,
           class: className.value,
           type: props.type,
-          disabled: props.disabled,
+          disabled: props.disabled || props.loading,
           'data-variant': props.variant,
           'data-size': props.size,
+          'data-loading': props.loading ? 'true' : undefined,
+          'aria-busy': props.loading ? 'true' : undefined,
         },
         slots.default?.(),
       )

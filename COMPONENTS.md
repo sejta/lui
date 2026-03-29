@@ -19,7 +19,7 @@ These are the main reusable components exposed today.
 
 ### Actions and Inputs
 
-- `UiButton`: button with `primary`, `secondary`, and `ghost` variants
+- `UiButton`: button with `primary`, `secondary`, and `ghost` variants; `loading` prop disables the button, shows a CSS spinner, and sets `aria-busy`
 - `UiInput`: text-like input with `modelValue`
 - `UiTextarea`: multiline text input
 

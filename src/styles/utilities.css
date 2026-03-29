@@ -367,6 +367,41 @@
   opacity: 0.5;
 }
 
+.lui-button[data-loading='true'] {
+  position: relative;
+  cursor: wait;
+  opacity: 1;
+  color: transparent;
+}
+
+.lui-button[data-loading='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--lui-radius-pill);
+  color: inherit;
+  animation: lui-spin var(--lui-duration-spin) linear infinite;
+}
+
+.lui-button[data-variant='primary'][data-loading='true']::after,
+.lui-button:not([data-variant])[data-loading='true']::after {
+  color: var(--lui-color-accent-contrast);
+}
+
+.lui-button[data-variant='secondary'][data-loading='true']::after,
+.lui-button[data-variant='ghost'][data-loading='true']::after {
+  color: var(--lui-color-text-muted);
+}
+
+@keyframes lui-spin {
+  to { transform: rotate(360deg); }
+}
+
 .lui-button[data-variant='secondary'] {
   background: var(--lui-color-surface);
   color: var(--lui-color-text);
@@ -807,6 +842,7 @@
 
 .lui-scroll-lock {
   overflow: hidden;
+  padding-right: var(--lui-scrollbar-compensation, 0px);
 }
 
 .lui-text-muted {

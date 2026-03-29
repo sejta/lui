@@ -255,7 +255,10 @@ Quick reminders for the most common primitives.
 h(UiButton, null, () => 'Primary')
 h(UiButton, { variant: 'secondary' }, () => 'Secondary')
 h(UiButton, { variant: 'ghost', size: 'sm' }, () => 'Ghost')
+h(UiButton, { loading: true }, () => 'Saving...')
 ```
+
+When `loading` is `true` the button is disabled, shows a spinner, and sets `aria-busy="true"`. The label text is hidden visually but the slot content stays in the DOM so the button width does not change.
 
 ### UiInput
 

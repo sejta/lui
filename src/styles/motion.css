@@ -7,5 +7,6 @@
   :root {
     --lui-duration-fast: 0ms;
     --lui-duration-normal: 0ms;
+    --lui-duration-spin: 1500ms;
   }
 }
