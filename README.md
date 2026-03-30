@@ -34,14 +34,18 @@ Current composables:
 - `useFocusTrap`
 - `useRovingTabindex`
 
-Directional exports at `1.0.3`:
+Directional exports at `1.0.4`:
 
 - `UiEmptyState`
 - app-shell contracts from `@sejtax/lui/app`
 
 ## Installation
 
-Choose the dependency source based on how you plan to use `lui`.
+From npm:
+
+```bash
+npm install @sejtax/lui
+```
 
 For local development with a sibling repository:
 
@@ -68,16 +72,17 @@ From GitHub by release tag:
 ```json
 {
   "dependencies": {
-    "@sejtax/lui": "github:sejta/lui#v1.0.3"
+    "@sejtax/lui": "github:sejta/lui#v1.0.4"
   }
 }
 ```
 
 Recommended usage:
 
+- use `npm install @sejtax/lui` for most projects
 - use `file:../lui` only for local development
 - use `workspace:*` if app and library live in one monorepo
-- use a GitHub tag or package registry for reproducible deploys
+- use a GitHub tag for reproducible deploys without npm
 
 Then run `npm install` in the frontend project as usual.
 
