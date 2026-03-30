@@ -62,7 +62,7 @@ Not every export has the same maturity.
 Directional or lightweight contracts at `1.0.3`:
 
 - `UiEmptyState`
-- app-shell exports from `@sejta/lui/app`
+- app-shell exports from `@sejtax/lui/app`
 
 These exports document intended direction, but the main supported package value today is the stable primitive set listed above.
 

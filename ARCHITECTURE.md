@@ -17,14 +17,14 @@ This layout keeps the public API small and predictable. Consumers install one pa
 
 These imports are the intended public surface:
 
-- `@sejta/lui`
-- `@sejta/lui/style.css`
-- `@sejta/lui/styles`
-- `@sejta/lui/composables`
-- `@sejta/lui/components`
-- `@sejta/lui/app`
+- `@sejtax/lui`
+- `@sejtax/lui/style.css`
+- `@sejtax/lui/styles`
+- `@sejtax/lui/composables`
+- `@sejtax/lui/components`
+- `@sejtax/lui/app`
 
-`@sejta/lui` is the primary entry. It re-exports the package surface and is the default import target for most consumers.
+`@sejtax/lui` is the primary entry. It re-exports the package surface and is the default import target for most consumers.
 
 ## Dependency Direction
 
@@ -136,7 +136,7 @@ Shipped and usable:
 
 Still lightweight or directional:
 
-- `@sejta/lui/app`
+- `@sejtax/lui/app`
 - `UiEmptyState`
 
 That split is intentional. The stable value of `lui` today is the component and styling foundation, not a fully built app-shell framework.

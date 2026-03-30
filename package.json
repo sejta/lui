@@ -1,5 +1,5 @@
 {
-  "name": "@sejta/lui",
+  "name": "@sejtax/lui",
   "version": "1.0.3",
   "private": false,
   "description": "Compact Vue 3 UI library for settings screens, admin panels, overlays, and small app shells.",

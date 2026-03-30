@@ -16,7 +16,7 @@ The default palette uses a restrained slate-blue accent rather than a bright pro
 Consumers are expected to import the package stylesheet once near the frontend entry point:
 
 ```ts
-import '@sejta/lui/style.css'
+import '@sejtax/lui/style.css'
 ```
 
 ## Style Layers
@@ -86,7 +86,7 @@ The package styling contract is intentionally small but real.
 
 Consumers can rely on:
 
-- the `@sejta/lui/style.css` entry
+- the `@sejtax/lui/style.css` entry
 - document theme switching through `data-lui-theme`
 - stable component class names prefixed with `lui-`
 - data attributes used for state and variant styling
@@ -107,7 +107,7 @@ The preferred customization path is token and cascade override, not forking pack
 Recommended approaches:
 
 - override CSS custom properties in the application theme
-- layer additional app styles after importing `@sejta/lui/style.css`
+- layer additional app styles after importing `@sejtax/lui/style.css`
 - use `class` and native attributes on components where supported
 - compose primitives into product-specific wrappers inside the application
 
