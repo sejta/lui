@@ -37,7 +37,7 @@ Current composables:
 Directional exports at `1.0.3`:
 
 - `UiEmptyState`
-- app-shell contracts from `lui-vue/app`
+- app-shell contracts from `@sejta/lui/app`
 
 ## Installation
 
@@ -48,7 +48,7 @@ For local development with a sibling repository:
 ```json
 {
   "dependencies": {
-    "lui-vue": "file:../lui"
+    "@sejta/lui": "file:../lui"
   }
 }
 ```
@@ -58,7 +58,7 @@ In a monorepo:
 ```json
 {
   "dependencies": {
-    "lui-vue": "workspace:*"
+    "@sejta/lui": "workspace:*"
   }
 }
 ```
@@ -68,7 +68,7 @@ From GitHub by release tag:
 ```json
 {
   "dependencies": {
-    "lui-vue": "github:sejta/lui#v1.0.3"
+    "@sejta/lui": "github:sejta/lui#v1.0.3"
   }
 }
 ```
@@ -86,18 +86,18 @@ Then run `npm install` in the frontend project as usual.
 Recommended import pattern:
 
 ```ts
-import 'lui-vue/style.css'
-import { UiButton, UiInput, UiPanel } from 'lui-vue'
+import '@sejta/lui/style.css'
+import { UiButton, UiInput, UiPanel } from '@sejta/lui'
 ```
 
-`lui-vue` root export also imports styles internally, but explicit `lui-vue/style.css` is the cleaner consumer setup because it makes style loading obvious.
+`@sejta/lui` root export also imports styles internally, but explicit `@sejta/lui/style.css` is the cleaner consumer setup because it makes style loading obvious.
 
 Example:
 
 ```ts
 import { defineComponent, h, ref } from 'vue'
-import 'lui-vue/style.css'
-import { UiButton, UiInput, UiPanel } from 'lui-vue'
+import '@sejta/lui/style.css'
+import { UiButton, UiInput, UiPanel } from '@sejta/lui'
 
 export default defineComponent({
   setup() {
@@ -140,7 +140,7 @@ Available themes right now:
 
 Style entry:
 
-- `lui-vue/style.css`
+- `@sejta/lui/style.css`
 
 ## Overlay Components
 
@@ -163,7 +163,7 @@ Toast is intentionally minimal: no promise API, no notification framework.
 Mount one viewport near the app root:
 
 ```ts
-import { UiToastViewport } from 'lui-vue'
+import { UiToastViewport } from '@sejta/lui'
 ```
 
 ```ts
@@ -176,7 +176,7 @@ h('div', [
 Trigger toasts programmatically:
 
 ```ts
-import { showToast } from 'lui-vue'
+import { showToast } from '@sejta/lui'
 
 showToast({
   type: 'success',
@@ -529,11 +529,11 @@ The same `icon` field works for `UiContextMenu` items.
 
 Primary entry points:
 
-- `lui-vue`
-- `lui-vue/style.css`
-- `lui-vue/components`
-- `lui-vue/composables`
-- `lui-vue/app`
+- `@sejta/lui`
+- `@sejta/lui/style.css`
+- `@sejta/lui/components`
+- `@sejta/lui/composables`
+- `@sejta/lui/app`
 
 ## Build And Development
 
