@@ -708,7 +708,8 @@
 .lui-toast-viewport {
   position: fixed;
   top: var(--lui-space-4);
-  right: var(--lui-space-4);
+  left: 50%;
+  translate: -50% 0;
   width: min(calc(100vw - 2rem), 22rem);
   display: grid;
   gap: var(--lui-space-2);
@@ -722,28 +723,30 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
   gap: var(--lui-space-3);
-  border: 1px solid var(--lui-color-border);
-  border-left-width: 3px;
+  border: 1px solid transparent;
   border-radius: var(--lui-radius-md);
-  background: color-mix(in srgb, var(--lui-color-surface) 94%, var(--lui-color-bg) 6%);
   box-shadow: var(--lui-shadow-sm);
   pointer-events: auto;
 }
 
 .lui-toast[data-type='success'] {
-  border-left-color: var(--lui-color-success);
+  background: color-mix(in srgb, var(--lui-color-success) 10%, var(--lui-color-surface));
+  border-color: color-mix(in srgb, var(--lui-color-success) 22%, transparent);
 }
 
 .lui-toast[data-type='info'] {
-  border-left-color: var(--lui-color-info);
+  background: color-mix(in srgb, var(--lui-color-info) 10%, var(--lui-color-surface));
+  border-color: color-mix(in srgb, var(--lui-color-info) 22%, transparent);
 }
 
 .lui-toast[data-type='warning'] {
-  border-left-color: var(--lui-color-warning);
+  background: color-mix(in srgb, var(--lui-color-warning) 10%, var(--lui-color-surface));
+  border-color: color-mix(in srgb, var(--lui-color-warning) 22%, transparent);
 }
 
 .lui-toast[data-type='error'] {
-  border-left-color: var(--lui-color-danger);
+  background: color-mix(in srgb, var(--lui-color-danger) 10%, var(--lui-color-surface));
+  border-color: color-mix(in srgb, var(--lui-color-danger) 22%, transparent);
 }
 
 .lui-toast__body {
