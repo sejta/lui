@@ -49,6 +49,10 @@ export function useClickOutside(
       return
     }
 
+    if (eventTarget instanceof Element && eventTarget.closest('[data-lui-floating]')) {
+      return
+    }
+
     handler(event as MouseEvent | PointerEvent)
   }
 

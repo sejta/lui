@@ -712,7 +712,7 @@
   width: min(calc(100vw - 2rem), 22rem);
   display: grid;
   gap: var(--lui-space-2);
-  z-index: var(--lui-z-dialog);
+  z-index: var(--lui-z-toast);
   pointer-events: none;
 }
 

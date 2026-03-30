@@ -61,6 +61,7 @@ export function renderMenuContent<TItem extends UiMenuItem>({
       style,
       role: 'menu',
       'data-placement': placement,
+      'data-lui-floating': 'true',
       onKeydown: handleMenuKeydown,
     },
     items.map((item, index) => {

@@ -105,6 +105,7 @@ export const UiTooltip = defineComponent({
                 style: floatingStyles.value,
                 role: 'tooltip',
                 'data-placement': placement.value,
+                'data-lui-floating': 'true',
               },
               props.content,
             ),

@@ -113,6 +113,7 @@ export const UiPopover = defineComponent({
                 role: 'dialog',
                 'aria-modal': 'false',
                 'data-placement': placement.value,
+                'data-lui-floating': 'true',
               },
               slots.default?.({
                 close: closePopover,
